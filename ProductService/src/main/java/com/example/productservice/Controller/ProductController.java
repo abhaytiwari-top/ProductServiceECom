@@ -1,5 +1,6 @@
 package com.example.productservice.Controller;
 
+import com.example.productservice.DTO.CreateProductResponseDTO;
 import com.example.productservice.Models.Product;
 import com.example.productservice.Service.FakeStoreProductService;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,18 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public void createProduct() {
+    public Product createProduct(@RequestBody CreateProductResponseDTO request) {
+
+        Product product = new Product();
+
+        if(request.getDescription() == null)
+        {
+            throw new IllegalArgumentException("Description cannot be null");
+        }
+
+        product = service.createProduct(request.getTitle(), request.getDescription(), request.getImageURL(), request.getCategory().getTitle());
+
+        return product;
 
     }
 

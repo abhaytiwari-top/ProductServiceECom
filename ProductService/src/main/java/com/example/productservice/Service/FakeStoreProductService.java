@@ -77,4 +77,25 @@ public class FakeStoreProductService {
         return response;
 
     }
+
+    public Product createProduct(String title, String description, String imageURL, String catTitle) {
+
+        Product response = new Product();
+
+        // set requestBody
+        FakeStoreResponseDTO requestBody = new FakeStoreResponseDTO();
+        requestBody.setTitle(title);
+        requestBody.setDescription(description);
+        requestBody.setImage(imageURL);
+        requestBody.setCategory(catTitle);
+
+        // http call
+        FakeStoreResponseDTO fakeStoreResponse = restTemplate.postForObject("https://fakestoreapi.com/products", requestBody, FakeStoreResponseDTO.class);
+
+        // convert response to Product Model
+        response = convertFakeStoreResponseToProduct(fakeStoreResponse);
+
+        // return
+        return response;
+    }
 }
