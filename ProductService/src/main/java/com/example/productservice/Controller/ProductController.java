@@ -1,12 +1,21 @@
 package com.example.productservice.Controller;
 
+import com.example.productservice.Models.Product;
+import com.example.productservice.Service.FakeStoreProductService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
 
+    private FakeStoreProductService service;
+    public ProductController(FakeStoreProductService service) {
+        this.service = service;
+    }
+
     @GetMapping("/products/{id}")
-    public void getProductById(@PathVariable("id") Integer id) {
+    public Product getProductById(@PathVariable("id") Integer id) {
+
+        return service.getProductById(id);
 
     }
 
