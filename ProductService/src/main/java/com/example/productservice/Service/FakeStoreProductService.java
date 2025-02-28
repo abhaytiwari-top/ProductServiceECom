@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 @Service
 public class FakeStoreProductService {
 
@@ -50,4 +54,27 @@ public class FakeStoreProductService {
         return product;
     }
 
+    public List<Product> getAllProducts() {
+
+        List<Product> response = new ArrayList<>();
+
+        // http call
+        ResponseEntity<FakeStoreResponseDTO[]> fakeStoreProducts = restTemplate.getForEntity("https://fakestoreapi.com/products", FakeStoreResponseDTO[].class);
+
+        // Status Code
+        System.out.println("Status Code : " + fakeStoreProducts.getStatusCode());
+
+        if(fakeStoreProducts.getBody() == null) {
+            throw new IllegalArgumentException("FakeStore Products Not Found");
+        }
+
+        // get and convert response to Product Model List<Product>
+        for(FakeStoreResponseDTO fakeStoreResponseDTO : fakeStoreProducts.getBody()) {
+            response.add(convertFakeStoreResponseToProduct(fakeStoreResponseDTO));
+        }
+
+        // return
+        return response;
+
+    }
 }

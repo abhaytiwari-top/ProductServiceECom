@@ -4,6 +4,8 @@ import com.example.productservice.Models.Product;
 import com.example.productservice.Service.FakeStoreProductService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -20,7 +22,9 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public void getAllProducts() {
+    public List<Product> getAllProducts() {
+
+        return service.getAllProducts();
 
     }
 
