@@ -1,6 +1,7 @@
 package com.example.productservice.Controller;
 
 import com.example.productservice.DTO.CreateProductResponseDTO;
+import com.example.productservice.Exception.ProductNotFoundException;
 import com.example.productservice.Models.Product;
 import com.example.productservice.Service.FakeStoreProductService;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,21 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable("id") Integer id) {
+    public Product getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
+        // validation
+        if(id==10000)
+        {
+            throw new IllegalArgumentException("Id is not valid");
+        }
 
-        return service.getProductById(id);
+        Product product = service.getProductById(id);
+        //validation
+        if(product==null)
+        {
+            throw new ProductNotFoundException("Product Not Found");
+        }
+
+        return product;
 
     }
 
