@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class FakeStoreProductService {
+public class FakeStoreProductService implements com.example.productservice.Service.Service {
 
     private RestTemplate restTemplate;
     public FakeStoreProductService(RestTemplate restTemplate) {
@@ -97,5 +97,10 @@ public class FakeStoreProductService {
 
         // return
         return response;
+    }
+
+    @Override
+    public Product getProductById(int id) {
+        return null;
     }
 }

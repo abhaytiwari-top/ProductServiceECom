@@ -4,6 +4,7 @@ import com.example.productservice.DTO.CreateProductResponseDTO;
 import com.example.productservice.Exception.ProductNotFoundException;
 import com.example.productservice.Models.Product;
 import com.example.productservice.Service.FakeStoreProductService;
+import com.example.productservice.Service.SelfProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
 public class ProductController {
 
     private FakeStoreProductService service;
+    private SelfProductService selfProductService;
+
     public ProductController(FakeStoreProductService service) {
         this.service = service;
     }
