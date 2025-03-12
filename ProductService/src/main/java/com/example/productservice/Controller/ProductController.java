@@ -4,7 +4,9 @@ import com.example.productservice.DTO.CreateProductResponseDTO;
 import com.example.productservice.Exception.ProductNotFoundException;
 import com.example.productservice.Models.Product;
 import com.example.productservice.Service.FakeStoreProductService;
+import com.example.productservice.Service.ProductService;
 import com.example.productservice.Service.SelfProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,11 +14,10 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    private FakeStoreProductService service;
-    private SelfProductService selfProductService;
+    private ProductService service;
 
-    public ProductController(FakeStoreProductService service) {
-        this.service = service;
+    public ProductController(@Qualifier("SelfProductService") ProductService inputService) {
+        this.service = inputService;
     }
 
     @GetMapping("/products/{id}")

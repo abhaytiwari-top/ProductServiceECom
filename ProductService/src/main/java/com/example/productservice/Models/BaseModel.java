@@ -18,8 +18,8 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
     private boolean isDeleted;
 
 }
