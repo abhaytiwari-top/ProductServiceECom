@@ -25,9 +25,13 @@ public class SelfProductService implements ProductService {
     @Override
     public Product getProductById(Integer id) {
 
-        Product response = productRepo.findById(id).get();
+        Optional<Product> response = productRepo.findById(id);
+        if(!response.isPresent())
+        {
+            throw new IllegalArgumentException("Product not found");
+        }
         System.out.println("Fetched Product : " + response);
-        return response;
+        return response.get();
     }
 
     @Override
@@ -48,21 +52,23 @@ public class SelfProductService implements ProductService {
         product.setTitle(title);
         product.setDescription(description);
         product.setImageURL(imageURL);
-        product.setCreatedAt(new Date());
-        product.setUpdatedAt(new Date());
+        product.setCreated_at(new Date());
+        product.setUpdated_at(new Date());
 
         // check if category exists in Db
         Category existingCategory = categoryRepo.findByTitle(catTitle).get();
         // If not present
         if(existingCategory == null) {
             category.setTitle(catTitle);
+            product.setCategory(category);
         }
-        product.setCategory(category);
+        else {
+            product.setCategory(existingCategory);
+        }
 
         // Finally save to Db
 
         Product response = productRepo.save(product);
-
         return response;
     }
 
