@@ -21,5 +21,6 @@ public class BaseModel {
     private Date created_at;
     private Date updated_at;
     private boolean is_deleted;
+    private String createdByUserName;
 
 }
