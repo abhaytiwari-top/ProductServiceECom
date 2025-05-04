@@ -7,6 +7,8 @@ import com.example.productservice.Service.FakeStoreProductService;
 import com.example.productservice.Service.ProductService;
 import com.example.productservice.Service.SelfProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,6 +62,13 @@ public class ProductController {
 
         return product;
 
+    }
+
+    @GetMapping("/products/{pageNo}/{pageSize}")
+    public ResponseEntity<Page<Product>> getPaginatedProducts(@PathVariable("pageNo") int pageNo, @PathVariable("pageSize") int pageSize) {
+
+        Page<Product> products = service.getPaginatedProducts(pageNo, pageSize);
+        return ResponseEntity.ok(products);
     }
 
     @PutMapping("/products/{id}")
