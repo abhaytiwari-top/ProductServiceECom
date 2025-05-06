@@ -7,6 +7,8 @@ import com.example.productservice.Service.FakeStoreProductService;
 import com.example.productservice.Service.ProductService;
 import com.example.productservice.Service.SelfProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
+    @Cacheable(value = "product", key = "#id")
     public Product getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
         // validation
         if(id==10000)
@@ -49,6 +52,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
+    @CachePut(value = "product", key = "#result.id")
     public Product createProduct(@RequestBody CreateProductResponseDTO request) {
 
         Product product = new Product();
